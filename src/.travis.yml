@@ -1,0 +1,16 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - echo "Start Creating an image with docker file"
+  - docker build -t iamjdg/docker-react-app -f Docker.dev .
+
+script:
+  - docker run -e CI=true iamjdg/docker-react-app npm run test -- --coverage
+
+after_success:
+  - echo "Test Succeded"
