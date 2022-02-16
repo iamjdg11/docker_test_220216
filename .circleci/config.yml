@@ -7,5 +7,5 @@ jobs:
       - image: iamjdg11/docker-react-app
     steps:
       - checkout
-      - run: docker run -e CI=true iamjdg11/docker-react-app npm run test -- --coverage
-      
+      - run: sudo docker run -e CI=true iamjdg11/docker-react-app npm run test -- --coverage
+
