@@ -1,22 +1,14 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/2.0/orb-intro/
-orbs:
-  docker: circleci/docker@1.7.0
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 jobs:
-  docker-job:
+  build:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/docker@1.7.0
+    
     steps:
-      - docker/build:
-          image: iamjdg11/docker-react-app
+      - checkout
 
-workflows:
-  docker-workflow:
-    jobs:
-      - docker-job
+      - run: docker build -t iamjdg11/docker-react-app -f Dockerfile.dev
+      - run: docker run -e CI=true iamjdg11/docker-react-app npm run test -- --coverage
+      
