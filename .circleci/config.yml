@@ -1,16 +1,11 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
-version: 2.1
+version: 2
 
-orbs:
-  docker: circleci/docker@1.7.0
-  
 jobs:
   build:
     docker:
-      - image: circleci/docker@1.7.0
-    
+      - image: iamjdg11/docker-react-app
     steps:
       - checkout
-
-      - run: docker build -t iamjdg11/docker-react-app -f Dockerfile.dev
       - run: docker run -e CI=true iamjdg11/docker-react-app npm run test -- --coverage
+      
